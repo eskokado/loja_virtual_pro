@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "597396856903",
+    "project_id": "esk-loja-virtual-pro",
+    "storage_bucket": "esk-loja-virtual-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597396856903:android:872c0009abccca5a269162",
+        "android_client_info": {
+          "package_name": "br.com.eskokado.loja_virtual_pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597396856903-7u4g9h453999sqk8i94n1opr9rh8nttt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFE8UKLghYvr4n6M3r0HzkmPVpaD78OWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597396856903-7u4g9h453999sqk8i94n1opr9rh8nttt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
