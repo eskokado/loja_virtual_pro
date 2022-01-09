@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/base/base_screen.dart';
 
 void main() async {
   runApp(const MyApp());
-  await Firebase.initializeApp();
-  FirebaseFirestore.instance.collection('teste').add({'teste': 'teste'});
 }
 
 class MyApp extends StatelessWidget {
@@ -13,14 +11,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (true) debugPrint('teste');
-
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'EskCti Loja',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container(),
+      home: BaseScreen(),
     );
   }
 }
