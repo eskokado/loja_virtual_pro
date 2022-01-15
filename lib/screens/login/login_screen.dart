@@ -79,7 +79,16 @@ class LoginScreen extends StatelessWidget {
                                 email: emailController.text,
                                 password: passController.text,
                               ),
-                              onFail: (value) => print(value),
+                              onFail: (String value) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(value,
+                                      style: const TextStyle(fontSize: 18)),
+                                  backgroundColor: Colors.red,
+                                ));
+                              },
+                              onSuccess: (value) =>
+                                  print(value), // TODO: FECHAR A TELA DE LOGIN
                             );
                       }
                     },
