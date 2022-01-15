@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
 import '../../helpers/validators.dart';
@@ -25,85 +26,104 @@ class LoginScreen extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
             key: formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              children: <Widget>[
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(hintText: 'E-mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  autocorrect: false,
-                  validator: (email) {
-                    if (!emailValid(email!)) return 'E-mail inválido';
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  controller: passController,
-                  decoration: const InputDecoration(hintText: 'Senha'),
-                  autocorrect: false,
-                  obscureText: true,
-                  validator: (pass) {
-                    if (pass!.isEmpty || pass.length < 6)
-                      return 'Senha inválida';
-                    return null;
-                  },
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      onPrimary: Theme.of(context).primaryColor,
-                      padding: EdgeInsets.zero,
-                      elevation: 0,
-                    ),
-                    child: const Text('Esqueci minha senha'),
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 44,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        context.read<UserManager>().signIn(
-                              user: User(
-                                email: emailController.text,
-                                password: passController.text,
-                              ),
-                              onFail: (String value) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(value,
-                                      style: const TextStyle(fontSize: 18)),
-                                  backgroundColor: Colors.red,
-                                ));
-                              },
-                              onSuccess: (value) =>
-                                  print(value), // TODO: FECHAR A TELA DE LOGIN
-                            );
-                      }
+            child: Consumer<UserManager>(builder: (_, userManager, child) {
+              return ListView(
+                padding: const EdgeInsets.all(16),
+                shrinkWrap: true,
+                children: <Widget>[
+                  TextFormField(
+                    controller: emailController,
+                    enabled: !userManager.loading,
+                    decoration: const InputDecoration(hintText: 'E-mail'),
+                    keyboardType: TextInputType.emailAddress,
+                    autocorrect: false,
+                    validator: (email) {
+                      if (!emailValid(email!)) return 'E-mail inválido';
+                      return null;
                     },
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).primaryColor,
-                      onPrimary: Colors.white,
-                    ),
-                    child: const Text(
-                      'Entrar',
-                      style: TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: passController,
+                    enabled: !userManager.loading,
+                    decoration: const InputDecoration(hintText: 'Senha'),
+                    autocorrect: false,
+                    obscureText: true,
+                    validator: (pass) {
+                      if (pass!.isEmpty || pass.length < 6)
+                        return 'Senha inválida';
+                      return null;
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        onPrimary: Theme.of(context).primaryColor,
+                        padding: EdgeInsets.zero,
+                        elevation: 0,
+                      ),
+                      child: const Text('Esqueci minha senha'),
                     ),
                   ),
-                )
-              ],
-            ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: userManager.loading
+                          ? null
+                          : () async {
+                              if (formKey.currentState!.validate()) {
+                                context.read<UserManager>().signIn(
+                                      user: User(
+                                        email: emailController.text,
+                                        password: passController.text,
+                                      ),
+                                      onFail: (String value) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(value,
+                                              style: const TextStyle(
+                                                  fontSize: 18)),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      },
+                                      onSuccess: (value) => print(
+                                          value), // TODO: FECHAR A TELA DE LOGIN
+                                    );
+                              }
+                            },
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        onSurface:
+                            Theme.of(context).primaryColor.withAlpha(100),
+                        onPrimary: Colors.white,
+                        elevation: 5,
+                        shape: const BeveledRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                      ),
+                      child: userManager.loading
+                          ? const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                            )
+                          : const Text(
+                              'Entrar',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                    ),
+                  )
+                ],
+              );
+            }),
           ),
         ),
       ),
