@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 import '../../helpers/validators.dart';
+import '../../models/user.dart';
+import '../../models/user_manager.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -69,9 +72,15 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 44,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        print(emailController.text);
+                        context.read<UserManager>().signIn(
+                              user: User(
+                                email: emailController.text,
+                                password: passController.text,
+                              ),
+                              onFail: (value) => print(value),
+                            );
                       }
                     },
                     style: ElevatedButton.styleFrom(
