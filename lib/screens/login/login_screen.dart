@@ -101,15 +101,20 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       onFail: (String value) {
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                          content: Text(value,
-                                              style: const TextStyle(
-                                                  fontSize: 18)),
-                                          backgroundColor: Colors.red,
-                                        ));
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              value,
+                                              style:
+                                                  const TextStyle(fontSize: 18),
+                                            ),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
                                       },
                                       onSuccess: (value) => print(
-                                          value), // TODO: FECHAR A TELA DE LOGIN
+                                        value,
+                                      ), // TODO: FECHAR A TELA DE LOGIN
                                     );
                               }
                             },
