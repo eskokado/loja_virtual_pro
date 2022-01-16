@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as Fire;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../helpers/firebase_errors.dart';
 import 'user.dart';
@@ -40,7 +41,28 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  set loading(bool value){
+  Future<void> signUp(
+      {required User user,
+      required Function onFail,
+      required Function onSuccess}) async {
+    loading = true;
+    try {
+      final Fire.UserCredential result =
+          await auth.createUserWithEmailAndPassword(
+        email: user.email,
+        password: user.password,
+      );
+
+      userFire = result.user;
+
+      onSuccess();
+    } on PlatformException catch (e) {
+      onFail(getErrorString(e.code));
+    }
+    loading = false;
+  }
+
+  set loading(bool value) {
     _loading = value;
     notifyListeners();
   }
