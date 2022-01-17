@@ -1,12 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  User({required this.email, required this.password, this.name, this.id});
+  User({this.email, this.password, this.name, this.id});
+
+  User.fromDocument(DocumentSnapshot document){
+    id = document.id;
+    name = document['name'] as String;
+    email = document['email'] as String;
+  }
 
   String? id;
   String? name;
-  String email;
-  String password;
+  String? email;
+  String? password;
 
   String? confirmPassword;
 
@@ -23,4 +29,6 @@ class User {
       'email': email,
     };
   }
+
+  
 }
