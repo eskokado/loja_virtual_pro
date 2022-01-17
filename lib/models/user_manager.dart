@@ -30,7 +30,7 @@ class UserManager extends ChangeNotifier {
         password: user.password!,
       );
 
-      user = result.user as User;
+      await _loadCurrentUser(firebaseUser: result.user);
 
       await Future.delayed(Duration(seconds: 5));
 
