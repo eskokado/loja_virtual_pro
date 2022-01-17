@@ -16,6 +16,8 @@ class UserManager extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
+  bool get isLoggedIn => user != null;
+
   User? user;
 
   Future<void> signIn({
@@ -34,12 +36,18 @@ class UserManager extends ChangeNotifier {
 
       await Future.delayed(Duration(seconds: 5));
 
-      onSuccess(result.user!.uid);
+      onSuccess();
     } on Fire.FirebaseAuthException catch (e) {
       //print(e.code);
       onFail(getErrorString(e.code));
     }
     loading = false;
+  }
+
+  void signOut(){
+    auth.signOut();
+    user = null;
+    notifyListeners();
   }
 
   Future<void> signUp(

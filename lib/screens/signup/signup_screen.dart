@@ -117,15 +117,14 @@ class SignUpScreen extends StatelessWidget {
                         context.read<UserManager>().signUp(
                               user: user,
                               onSuccess: () {
-                                debugPrint('sucesso');
-                                // TODO: POP
+                                Navigator.of(context).pop();
                               },
                               onFail: (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
                                       'Falha ao cadastrar: $e',
-                                      style: TextStyle(fontSize: 18),
+                                      style: const TextStyle(fontSize: 18),
                                     ),
                                     backgroundColor: Colors.red,
                                   ),
