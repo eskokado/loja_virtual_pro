@@ -44,7 +44,7 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  void signOut(){
+  void signOut() {
     auth.signOut();
     user = null;
     notifyListeners();
@@ -65,6 +65,10 @@ class UserManager extends ChangeNotifier {
       user.id = result.user!.uid;
 
       await user.saveData();
+
+      await _loadCurrentUser(firebaseUser: result.user);
+
+      await Future.delayed(Duration(seconds: 5));
 
       onSuccess();
     } on PlatformException catch (e) {
