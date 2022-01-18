@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class ProductManager {
+import 'product.dart';
+
+class ProductManager extends ChangeNotifier {
   ProductManager() {
     _loadAllProducts();
   }
+
+  List<Product> _allProducts = [];
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -11,8 +16,9 @@ class ProductManager {
     final QuerySnapshot snapProducts =
         await firestore.collection('products').get();
 
-    for (DocumentSnapshot doc in snapProducts.docs) {
-      print(doc.data());
-    }
+    _allProducts =
+        snapProducts.docs.map((d) => Product.fromDocument(d)).toList();
+
+    notifyListeners();
   }
 }
