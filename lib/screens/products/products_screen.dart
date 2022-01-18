@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_pro/common/custom_drawer/custom_drawer.dart';
-import 'package:loja_virtual_pro/models/product_manager.dart';
-import 'package:loja_virtual_pro/screens/products/components/product_list_tile.dart';
 import 'package:provider/provider.dart';
+
+import '../../common/custom_drawer/custom_drawer.dart';
+import '../../models/product_manager.dart';
+import 'components/product_list_tile.dart';
+import 'components/search_dialog.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -14,6 +16,15 @@ class ProductsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Products'),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showDialog(
+                  context: context, builder: (_) => const SearchDialog());
+            },
+          )
+        ],
       ),
       body: Consumer<ProductManager>(
         builder: (_, productManager, __) {
