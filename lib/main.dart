@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'models/product_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'models/user_manager.dart';
@@ -21,9 +22,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManager(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserManager(),
+          lazy: false,
+        ),
+        Provider(
+          create: (_) => ProductManager(),
+          lazy: false,
+        )
+      ],
       child: MaterialApp(
         title: 'EskCti Loja',
         debugShowCheckedModeBanner: false,
