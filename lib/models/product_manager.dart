@@ -8,7 +8,7 @@ class ProductManager extends ChangeNotifier {
     _loadAllProducts();
   }
 
-  List<Product> _allProducts = [];
+  List<Product> allProducts = [];
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -16,7 +16,7 @@ class ProductManager extends ChangeNotifier {
     final QuerySnapshot snapProducts =
         await firestore.collection('products').get();
 
-    _allProducts =
+    allProducts =
         snapProducts.docs.map((d) => Product.fromDocument(d)).toList();
 
     notifyListeners();
