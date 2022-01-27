@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'models/product_manager.dart';
 import 'package:provider/provider.dart';
 
+import 'models/product.dart';
+import 'models/product_manager.dart';
 import 'models/user_manager.dart';
 import 'screens/base/base_screen.dart';
 import 'screens/login/login_screen.dart';
+import 'screens/product/product_screen.dart';
 import 'screens/signup/signup_screen.dart';
 
 void main() async {
@@ -49,6 +51,12 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => SignUpScreen());
             case '/login':
               return MaterialPageRoute(builder: (_) => LoginScreen());
+            case '/product':
+              return MaterialPageRoute(
+                builder: (_) => ProductScreen(
+                  product: settings.arguments as Product,
+                ),
+              );
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());
