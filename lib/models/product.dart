@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'item_size.dart';
 
 class Product extends ChangeNotifier {
+  Product();
   Product.fromDocument(DocumentSnapshot document) {
     id = document.id;
     name = document['name'] as String;
@@ -14,8 +15,6 @@ class Product extends ChangeNotifier {
           (s) => ItemSize.fromMap(s as Map<String, dynamic>),
         )
         .toList();
-
-    print(sizes);
   }
 
   String? id;
@@ -23,4 +22,11 @@ class Product extends ChangeNotifier {
   String? description;
   List<String>? images;
   List<ItemSize>? sizes;
+
+  ItemSize? _selectedSize = ItemSize();
+  ItemSize? get selectedSize => _selectedSize;
+  set selectedSize(ItemSize? value) {
+    _selectedSize = value;
+    notifyListeners();
+  }
 }
