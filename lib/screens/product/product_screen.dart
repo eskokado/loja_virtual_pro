@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/product.dart';
@@ -92,7 +93,41 @@ class ProductScreen extends StatelessWidget {
                     children: product.sizes!.map((s) {
                       return SizeWidget(size: s);
                     }).toList(),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  if (product.hasStock)
+                    Consumer2<UserManager, Product>(
+                      builder: (_, userManager, product, __) {
+                        return SizedBox(
+                          height: 44,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              onPrimary: Colors.white,
+                              onSurface:
+                                  Theme.of(context).primaryColor.withAlpha(100),
+                              primary: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: product.selectedSize != null
+                                ? () {
+                                    if (userManager.isLoggedIn) {
+                                      // TODO: ADICIONAR AO CARRINHO
+                                    } else {
+                                      Navigator.of(context).pushNamed('/login');
+                                    }
+                                  }
+                                : null,
+                            child: Text(
+                              userManager.isLoggedIn
+                                  ? 'Adicionar ao Carrinho'
+                                  : 'Entre para Comprar',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                 ],
               ),
             )
