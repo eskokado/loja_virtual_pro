@@ -6,7 +6,7 @@ import 'item_size.dart';
 class Product extends ChangeNotifier {
   Product();
   Product.fromDocument(DocumentSnapshot document) {
-    id = document.id;
+    id = document.id ;
     name = document['name'] as String;
     description = document['description'] as String;
     images = List<String>.from(document['images'] as List<dynamic>);
