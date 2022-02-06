@@ -6,11 +6,11 @@ class ItemSize {
     stock = map['stock'] as int;
   }
 
-  late final String? name;
-  late final num? price;
-  late final int? stock;
+  String name = '';
+  num price = 0;
+  int stock = 0;
 
-  bool get hasStock => stock! > 0;
+  bool get hasStock => stock > 0;
 
   @override
   String toString() {

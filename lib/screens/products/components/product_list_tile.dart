@@ -22,7 +22,7 @@ class ProductListTile extends StatelessWidget {
             children: <Widget>[
               AspectRatio(
                 aspectRatio: 1,
-                child: Image.network(product.images!.first),
+                child: Image.network(product.images.first),
               ),
               const SizedBox(
                 width: 16,
@@ -33,7 +33,7 @@ class ProductListTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.name!,
+                      product.name,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,

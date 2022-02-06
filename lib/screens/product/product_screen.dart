@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/cart_manager.dart';
 import '../../models/product.dart';
+import '../../models/user_manager.dart';
 import '../products/components/size_widget.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class ProductScreen extends StatelessWidget {
       value: product,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(product.name!),
+          title: Text(product.name),
           centerTitle: true,
         ),
         backgroundColor: Colors.white,
@@ -26,7 +27,7 @@ class ProductScreen extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1,
               child: CarouselSlider(
-                items: product.images!
+                items: product.images
                     .map((url) => Container(
                             child: Image(
                           image: NetworkImage(url),
@@ -45,9 +46,11 @@ class ProductScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    product.name!,
+                    product.name,
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w600),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
@@ -76,7 +79,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    product.description!,
+                    product.description,
                     style: const TextStyle(fontSize: 16),
                   ),
                   const Padding(
@@ -90,7 +93,7 @@ class ProductScreen extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: product.sizes!.map((s) {
+                    children: product.sizes.map((s) {
                       return SizeWidget(size: s);
                     }).toList(),
                   ),
@@ -112,7 +115,9 @@ class ProductScreen extends StatelessWidget {
                             onPressed: product.selectedSize != null
                                 ? () {
                                     if (userManager.isLoggedIn) {
-                                      // TODO: ADICIONAR AO CARRINHO
+                                      context
+                                          .read<CartManager>()
+                                          .addToCart(product);
                                     } else {
                                       Navigator.of(context).pushNamed('/login');
                                     }

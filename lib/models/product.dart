@@ -17,23 +17,23 @@ class Product extends ChangeNotifier {
         .toList();
   }
 
-  String? id;
-  String? name;
-  String? description;
-  List<String>? images;
-  List<ItemSize>? sizes;
+  String id = '';
+  String name = '';
+  String description = '';
+  List<String> images = [];
+  List<ItemSize> sizes = [];
 
-  ItemSize? _selectedSize = ItemSize();
-  ItemSize? get selectedSize => _selectedSize;
-  set selectedSize(ItemSize? value) {
+  ItemSize _selectedSize = ItemSize();
+  ItemSize get selectedSize => _selectedSize;
+  set selectedSize(ItemSize value) {
     _selectedSize = value;
     notifyListeners();
   }
 
-    int get totalStock {
+  int get totalStock {
     int stock = 0;
-    for(final size in sizes!){
-      stock += size.stock!;
+    for (final size in sizes) {
+      stock += size.stock;
     }
     return stock;
   }
