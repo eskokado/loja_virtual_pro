@@ -10,7 +10,7 @@ class CartProduct {
     size = product!.selectedSize.name;
   }
 
-    CartProduct.fromDocument(DocumentSnapshot document) {
+  CartProduct.fromDocument(DocumentSnapshot document) {
     productId = document['pid'] as String;
     quantity = document['quantity'] as int;
     size = document['size'] as String;
@@ -23,8 +23,6 @@ class CartProduct {
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-
 
   String productId = '';
   int quantity = 0;
@@ -40,5 +38,17 @@ class CartProduct {
   num get unitPrice {
     if (product == null) return 0;
     return itemSize?.price ?? 0;
+  }
+
+  Map<String, dynamic> toCartItemMap() {
+    return {
+      'pid': productId,
+      'quantity': quantity,
+      'size': size,
+    };
+  }
+
+  bool stackable(Product product) {
+    return product.id == productId && product.selectedSize.name == size;
   }
 }

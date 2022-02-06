@@ -32,6 +32,16 @@ class CartManager {
   }
 
   void addToCart(Product product) {
+    try {
+      final e = items.firstWhere((p) => p.stackable(product));
+      e.quantity++;
+    } catch (e) {
+      final cartProduct = CartProduct.fromProduct(product);
+      items.add(cartProduct);
+      if (user != null) {
+        user!.cartReference.add(cartProduct.toCartItemMap());
+      }
+    }
     items.add(CartProduct.fromProduct(product));
     print(items);
   }
