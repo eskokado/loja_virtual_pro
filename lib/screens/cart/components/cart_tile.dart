@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/custom_icon_button.dart';
 import '../../../models/cart_product.dart';
 
 class CartTile extends StatelessWidget {
@@ -10,12 +11,12 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return cartProduct.product == null
-            ? Container()
-            : Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
+        ? Container()
+        : Card(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
                 children: <Widget>[
                   SizedBox(
                     height: 80,
@@ -26,6 +27,7 @@ class CartTile extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             cartProduct.product!.name,
@@ -52,10 +54,28 @@ class CartTile extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      CustomIconButton(
+                        iconData: Icons.add,
+                        color: Theme.of(context).primaryColor,
+                        onTap: cartProduct.increment,
+                      ),
+                      Text(
+                        '${cartProduct.quantity}',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      CustomIconButton(
+                        iconData: Icons.remove,
+                        color: Theme.of(context).primaryColor,
+                        onTap: cartProduct.decrement,
+                      ),
+                    ],
                   )
                 ],
               ),
-      ),
-    );
+            ),
+          );
   }
 }
