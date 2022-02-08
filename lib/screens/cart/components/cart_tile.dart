@@ -11,11 +11,11 @@ class CartTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return cartProduct.product == null
-        ? Container()
-        : ChangeNotifierProvider.value(
-            value: cartProduct,
-            child: Card(
+    return ChangeNotifierProvider.value(
+      value: cartProduct,
+      child: cartProduct.product == null
+          ? Container()
+          : Card(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Padding(
                 padding:
@@ -48,13 +48,26 @@ class CartTile extends StatelessWidget {
                                     fontWeight: FontWeight.w300),
                               ),
                             ),
-                            Text(
-                              'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold),
-                            )
+                            Consumer<CartProduct>(
+                              builder: (_, cartProduct, __) {
+                                if (cartProduct.hasStock)
+                                  return Text(
+                                    'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                else
+                                  return const Text(
+                                    'Sem estoque suficiente',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 12,
+                                    ),
+                                  );
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -85,6 +98,6 @@ class CartTile extends StatelessWidget {
                 ),
               ),
             ),
-          );
+    );
   }
 }
