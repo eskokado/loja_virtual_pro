@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_pro/screens/home/components/section_header.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../../models/section.dart';
+import 'item_tile.dart';
+import 'section_header.dart';
 
 class SectionStaggered extends StatelessWidget {
   const SectionStaggered({Key? key, required this.section}) : super(key: key);
@@ -10,23 +11,23 @@ class SectionStaggered extends StatelessWidget {
   final Section section;
 
   @override
-  Widget build(BuildContext context) {    return Container(
+  Widget build(BuildContext context) {
+    return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SectionHeader(section: section,),
+          SectionHeader(
+            section: section,
+          ),
           StaggeredGrid.count(
             crossAxisCount: 4,
             mainAxisSpacing: 4,
-            crossAxisSpacing: 4,            
+            crossAxisSpacing: 4,
             children: [
               ...section.items.mapIndexed((tile, index) {
-                return Image.network(
-                  section.items[index].image,
-                  fit: BoxFit.cover,
-                );
-              }),              
+                return ItemTile(item: section.items[index]);
+              }),
             ],
           )
         ],
