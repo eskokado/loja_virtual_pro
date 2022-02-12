@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/custom_drawer/custom_drawer.dart';
@@ -15,26 +16,42 @@ class BaseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => PageManager(pageController),
-      child: PageView(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          HomeScreen(),
-          const ProductsScreen(),
-          Scaffold(
-            drawer: CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Home3'),
+      child: Consumer<UserManager>(builder: (_, userManager, __) {
+        return PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            HomeScreen(),
+            const ProductsScreen(),
+            Scaffold(
+              drawer: CustomDrawer(),
+              appBar: AppBar(
+                title: const Text('Home3'),
+              ),
             ),
-          ),
-          Scaffold(
-            drawer: CustomDrawer(),
-            appBar: AppBar(
-              title: const Text('Home4'),
+            Scaffold(
+              drawer: CustomDrawer(),
+              appBar: AppBar(
+                title: const Text('Home4'),
+              ),
             ),
-          ),
-        ],
-      ),
+            if (userManager.adminEnabled) ...[
+              Scaffold(
+                drawer: CustomDrawer(),
+                appBar: AppBar(
+                  title: const Text('Usuários'),
+                ),
+              ),
+              Scaffold(
+                drawer: CustomDrawer(),
+                appBar: AppBar(
+                  title: const Text('Pedidos'),
+                ),
+              ),
+            ]
+          ],
+        );
+      }),
     );
   }
 }

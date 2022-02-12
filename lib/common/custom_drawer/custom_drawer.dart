@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_pro/models/user_manager.dart';
+import 'package:provider/provider.dart';
+
 import 'custom_drawer_header.dart';
 import 'drawer_tile.dart';
 
@@ -10,38 +13,60 @@ class CustomDrawer extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 203, 236, 241),
-                  Colors.white,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )
-            ),
+                gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 203, 236, 241),
+                Colors.white,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            )),
           ),
           ListView(
-            children: const <Widget>[
-              CustomDrawerHeader(),
-              DrawerTile(
+            children: [
+              const CustomDrawerHeader(),
+              const DrawerTile(
                 iconData: Icons.home,
                 title: 'Início',
                 page: 0,
               ),
-              DrawerTile(
+              const DrawerTile(
                 iconData: Icons.list,
                 title: 'Produtos',
                 page: 1,
               ),
-              DrawerTile(
+              const DrawerTile(
                 iconData: Icons.playlist_add_check,
                 title: 'Meus Pedidos',
                 page: 2,
               ),
-              DrawerTile(
+              const DrawerTile(
                 iconData: Icons.location_on,
                 title: 'Lojas',
                 page: 3,
+              ),
+              Consumer<UserManager>(
+                builder: (_, userManager, __) {
+                  if (userManager.adminEnabled) {
+                    return Column(
+                      children: const [
+                        Divider(),
+                        DrawerTile(
+                          iconData: Icons.settings,
+                          title: 'Usuários',
+                          page: 4,
+                        ),
+                        DrawerTile(
+                          iconData: Icons.settings,
+                          title: 'Pedidos',
+                          page: 5,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ],
           ),
