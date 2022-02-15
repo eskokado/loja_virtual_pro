@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_carousel/infinite_carousel.dart';
 import 'package:loja_virtual_pro/screens/edit_product/components/image_source_sheet.dart';
@@ -71,10 +72,14 @@ class _ImagesFormState extends State<ImagesForm> {
                       color: Theme.of(context).primaryColor,
                       iconSize: 50,
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (_) => const ImageSourceSheet(),
-                        );
+                        if (Platform.isAndroid)
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (_) => const ImageSourceSheet());
+                        else
+                          showCupertinoModalPopup(
+                              context: context,
+                              builder: (_) => const ImageSourceSheet());
                       },
                     ),
                   ),
