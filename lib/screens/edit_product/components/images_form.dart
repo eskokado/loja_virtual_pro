@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:infinite_carousel/infinite_carousel.dart';
+import 'package:loja_virtual_pro/screens/edit_product/components/image_source_sheet.dart';
 
 import '../../../models/product.dart';
 
@@ -60,6 +61,20 @@ class _ImagesFormState extends State<ImagesForm> {
                           state.value!.remove(state.value![itemIndex]);
                           state.didChange(state.value);
                         }
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.add_a_photo),
+                      color: Theme.of(context).primaryColor,
+                      iconSize: 50,
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) => const ImageSourceSheet(),
+                        );
                       },
                     ),
                   ),
