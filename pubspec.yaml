@@ -46,6 +46,7 @@ dependencies:
   faker: ^2.0.0
   infinite_carousel: ^1.0.2
   image_picker: ^0.8.4+8
+  image_cropper: ^1.4.1
   
 dev_dependencies:
   flutter_test:
