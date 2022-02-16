@@ -24,8 +24,14 @@ class _ImagesFormState extends State<ImagesForm> {
   @override
   Widget build(BuildContext context) {
     return FormField<List<dynamic>>(
-      initialValue: widget.product.images,
+      initialValue: List.from(widget.product.images),
       builder: (state) {
+        void onImageSelected(File file) {
+          state.value!.add(file);
+          state.didChange(state.value);
+          Navigator.of(context).pop();
+        }
+
         return AspectRatio(
           aspectRatio: 1,
           child: InfiniteCarousel.builder(
@@ -74,12 +80,18 @@ class _ImagesFormState extends State<ImagesForm> {
                       onPressed: () {
                         if (Platform.isAndroid)
                           showModalBottomSheet(
-                              context: context,
-                              builder: (_) => const ImageSourceSheet());
+                            context: context,
+                            builder: (_) => ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                            ),
+                          );
                         else
                           showCupertinoModalPopup(
-                              context: context,
-                              builder: (_) => const ImageSourceSheet());
+                            context: context,
+                            builder: (_) => ImageSourceSheet(
+                              onImageSelected: onImageSelected,
+                            ),
+                          );
                       },
                     ),
                   ),
