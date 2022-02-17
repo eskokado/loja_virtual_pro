@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_pro/screens/edit_product/components/sizes_form.dart';
 
 import '../../models/product.dart';
 import 'components/images_form.dart';
@@ -80,6 +81,9 @@ class EditProductScreen extends StatelessWidget {
                       if (desc!.length < 10) return 'Descrição muito curta';
                       return null;
                     },
+                  ),
+                  SizesForm(
+                    product: product,
                   ),
                   ElevatedButton(
                     onPressed: () {
