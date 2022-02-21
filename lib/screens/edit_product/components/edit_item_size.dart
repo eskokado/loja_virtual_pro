@@ -3,11 +3,18 @@ import '../../../common/custom_icon_button.dart';
 import '../../../models/item_size.dart';
 
 class EditItemSize extends StatelessWidget {
-  const EditItemSize({Key? key, required this.size, required this.onRemove})
+  const EditItemSize(
+      {Key? key,
+      required this.size,
+      this.onRemove,
+      this.onMoveUp,
+      this.onMoveDown})
       : super(key: key);
 
   final ItemSize size;
-  final VoidCallback onRemove;
+  final VoidCallback? onRemove;
+  final VoidCallback? onMoveUp;
+  final VoidCallback? onMoveDown;
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +63,15 @@ class EditItemSize extends StatelessWidget {
           color: Colors.red,
           onTap: onRemove,
         ),
-        const CustomIconButton(
+        CustomIconButton(
           iconData: Icons.arrow_drop_up,
           color: Colors.black,
+          onMoveUp: onMoveUp,
         ),
-        const CustomIconButton(
+        CustomIconButton(
           iconData: Icons.arrow_drop_down,
           color: Colors.black,
+          onMoveDown: onMoveDown,
         )
       ],
     );
