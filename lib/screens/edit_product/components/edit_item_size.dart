@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:loja_virtual_pro/models/item_size.dart';
+import '../../../common/custom_icon_button.dart';
+import '../../../models/item_size.dart';
 
 class EditItemSize extends StatelessWidget {
-  const EditItemSize({Key? key, required this.size}) : super(key: key);
+  const EditItemSize({Key? key, required this.size, required this.onRemove})
+      : super(key: key);
 
   final ItemSize size;
+  final VoidCallback onRemove;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
+          flex: 30,
           child: TextFormField(
             initialValue: size.name,
             decoration: const InputDecoration(
@@ -23,6 +27,7 @@ class EditItemSize extends StatelessWidget {
           width: 4,
         ),
         Expanded(
+          flex: 30,
           child: TextFormField(
             initialValue: size.stock.toString(),
             decoration: const InputDecoration(
@@ -36,6 +41,7 @@ class EditItemSize extends StatelessWidget {
           width: 4,
         ),
         Expanded(
+          flex: 40,
           child: TextFormField(
             initialValue: size.price.toStringAsFixed(2),
             decoration: const InputDecoration(
@@ -45,6 +51,19 @@ class EditItemSize extends StatelessWidget {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
         ),
+        CustomIconButton(
+          iconData: Icons.remove,
+          color: Colors.red,
+          onTap: onRemove,
+        ),
+        const CustomIconButton(
+          iconData: Icons.arrow_drop_up,
+          color: Colors.black,
+        ),
+        const CustomIconButton(
+          iconData: Icons.arrow_drop_down,
+          color: Colors.black,
+        )
       ],
     );
   }
